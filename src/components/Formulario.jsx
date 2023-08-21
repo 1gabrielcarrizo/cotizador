@@ -1,15 +1,20 @@
 import React, { Fragment } from 'react'
 import { marcas, planes, years } from '../constants'
+import useCotizador from '../hooks/useCotizador'
 
 const Formulario = () => {
+
+    // const {modal, setModal, cambiarSetModal} = useCotizador() // recibe las funciones que se encuentran en el value
+    const {datos, handleChangeDatos} = useCotizador()
+
     return (
         <>
             <form>
                 <div className="my-5">
-                    <label htmlFor="" className="block mb-3 font-bold text-gray-400 uppercase">
+                    <label htmlFor="marca" className="block mb-3 font-bold text-gray-400 uppercase">
                         Marca
                     </label>
-                    <select name="marca" id="" className='w-full p-3 bg-white border border-gray-200'>
+                    <select onChange={(e) => handleChangeDatos(e)} name="marca" id="marca" className='w-full p-3 bg-white border border-gray-200' value={datos.marca}>
                         <option value="">Seleccione una marca</option>
                         {marcas.map((marca) => (
                             <option
@@ -21,10 +26,10 @@ const Formulario = () => {
                 </div>
 
                 <div className="my-5">
-                    <label htmlFor="" className="block mb-3 font-bold text-gray-400 uppercase">
+                    <label htmlFor="year" className="block mb-3 font-bold text-gray-400 uppercase">
                         Año
                     </label>
-                    <select name="marca" id="" className='w-full p-3 bg-white border border-gray-200'>
+                    <select onChange={(e) => handleChangeDatos(e)} name="year" id="year" className='w-full p-3 bg-white border border-gray-200' value={datos.year}>
                         <option value="">Seleccione un año</option>
                         {years.map((year) => (
                             <option
@@ -36,14 +41,14 @@ const Formulario = () => {
                 </div>
 
                 <div className="my-5">
-                    <label htmlFor="" className="block mb-3 font-bold text-gray-400 uppercase">
+                    <label className="block mb-3 font-bold text-gray-400 uppercase">
                         Planes
                     </label>
                     <div className='flex gap-3 items-center'>
                         {planes.map((plan) => (
                             <Fragment key={plan.id}>
-                            <label htmlFor="">{plan.nombre}</label>
-                            <input type="radio" name="plan" id={plan.id} />
+                            <label>{plan.nombre}</label>
+                            <input type="radio" name="plan" value={plan.id} onChange={(e) => handleChangeDatos(e)} />
                             </Fragment>
                         ))}
                     </div>
