@@ -17,6 +17,8 @@ const CotizadorProvider = ({ children }) => { // el provider es de donde salen l
         plan: ''
     })
 
+    const [error, setError] = useState('')
+
     const handleChangeDatos = (e) => {
         setDatos({
             ...datos, // cuando se trabaje con objetos, hay que usar el spread operator
@@ -28,7 +30,9 @@ const CotizadorProvider = ({ children }) => { // el provider es de donde salen l
         <CotizadorContext.Provider
         value={{
             datos,
-            handleChangeDatos
+            handleChangeDatos,
+            error,
+            setError
         }}>
             {children}
         </CotizadorContext.Provider>
