@@ -1,9 +1,12 @@
 import React from 'react'
 import AppSeguro from './components/AppSeguro'
+import { CotizadorProvider } from './context/CotizadorProvider'
 
 const App = () => {
   return (
-    <AppSeguro/>
+    <CotizadorProvider>
+      <AppSeguro/>
+    </CotizadorProvider>
   )
 }
 
