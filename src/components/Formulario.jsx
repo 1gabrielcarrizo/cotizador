@@ -6,7 +6,7 @@ import Error from './Error'
 const Formulario = () => {
 
     // const {modal, setModal, cambiarSetModal} = useCotizador() // recibe las funciones que se encuentran en el value
-    const {datos, handleChangeDatos, error, setError} = useCotizador()
+    const {datos, handleChangeDatos, error, setError, cotizarSeguro} = useCotizador()
 
     const handleSubmit = (e) => {
         e.preventDefault()
@@ -15,6 +15,7 @@ const Formulario = () => {
             return
         }
         setError('') // en caso de que se completen los campos, eliminar el mensaje de error
+        cotizarSeguro()
     }
 
     return (

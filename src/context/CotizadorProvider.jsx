@@ -1,4 +1,5 @@
 import React, { createContext, useState } from 'react'
+import { calcularMarca, calcularPlan, formatearDinero, obtenerDiferenciaYear } from '../helpers'
 
 const CotizadorContext = createContext()
 
@@ -16,24 +17,44 @@ const CotizadorProvider = ({ children }) => { // el provider es de donde salen l
         year: '',
         plan: ''
     })
-
     const [error, setError] = useState('')
+    const [resultado, setResultado] = useState(0)
 
     const handleChangeDatos = (e) => {
         setDatos({
             ...datos, // cuando se trabaje con objetos, hay que usar el spread operator
-            [e.target.name] : e.target.value
+            [e.target.name]: e.target.value
         })
+    }
+
+    const cotizarSeguro = () => {
+        // base
+        let resultado = 2000
+        // obtener diferencia de años
+        const diferencia = obtenerDiferenciaYear(datos.year)
+        // restar el 3% por cada año
+        resultado -= ((diferencia * 3) * resultado) / 100
+        // Europeo recibe un incremento del 30%
+        // Americano recibe un incremento del 15%
+        // Asiatico recibe un incremento del 5%
+        resultado *= calcularMarca(datos.marca)
+        // basico recibe un 20%
+        // completo recibe un 50%
+        resultado *= calcularPlan(datos.plan)
+        // formatear dinero
+        resultado = formatearDinero(resultado)
+        setResultado(resultado)
     }
 
     return (
         <CotizadorContext.Provider
-        value={{
-            datos,
-            handleChangeDatos,
-            error,
-            setError
-        }}>
+            value={{
+                datos,
+                handleChangeDatos,
+                error,
+                setError,
+                cotizarSeguro
+            }}>
             {children}
         </CotizadorContext.Provider>
     )
